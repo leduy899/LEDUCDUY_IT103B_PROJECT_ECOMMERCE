@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ecommerce Admin Dashboard</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../css/category-manager.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <aside class="sidebar">
+        <div class="brand">
+          <i class="fa-solid fa-fire brand-icon"></i>
+          <span class="brand-name">Ecommerce</span>
+        </div>
+        <ul class="nav-menu">
+          <li
+            class="nav-item"
+            data-tab="dashboard"
+            onclick="switchTab('dashboard')"
+          >
+            <i class="fa-solid fa-house"></i> Thống kê
+          </li>
+          <li
+            class="nav-item active"
+            data-tab="category"
+            onclick="switchTab('category')"
+          >
+            <i class="fa-solid fa-layer-group"></i> Danh mục
+          </li>
+          <li
+            class="nav-item"
+            data-tab="product"
+            onclick="switchTab('product')"
+          >
+            <i class="fa-regular fa-folder-open"></i> Sản phẩm
+          </li>
+        </ul>
+      </aside>
+
+      <main class="main-content">
+        <header class="top-header">
+          <div class="header-actions">
+            <i class="fa-solid fa-bell notification-icon"></i>
+            <div class="user-profile">
+              <img
+                src="https://randomuser.me/api/portraits/men/32.jpg"
+                alt="User Avatar"
+                class="avatar"
+                onclick="toggleLogoutMenu(event)"
+              />
+
+              <div class="logout-menu" id="logoutMenu">
+                <div class="logout-item" onclick="handleLogout()">
+                  <i class="fa-solid fa-arrow-right-from-bracket"></i> Log out
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div class="content-area">
+          <section
+            id="dashboard-view"
+            class="view-section"
+            style="display: none"
+          >
+            <div class="page-header">
+              <h1 class="page-title">Thống kê</h1>
+            </div>
+          </section>
+
+          <section id="category-view" class="view-section">
+            <div class="page-header">
+              <h1 class="page-title">Danh mục</h1>
+              <button
+                class="btn btn-primary"
+                onclick="openCategoryModal('add')"
+              >
+                Thêm mới danh mục
+              </button>
+            </div>
+
+            <div class="filter-bar">
+              <div class="filter-left">
+                <select id="catStatusFilter" class="form-select">
+                  <option value="all">Tất cả</option>
+                  <option value="active" selected>Đang hoạt động</option>
+                  <option value="inactive">Ngừng hoạt động</option>
+                </select>
+              </div>
+              <div class="filter-right">
+                <div class="search-box">
+                  <input
+                    type="text"
+                    id="catSearchInput"
+                    placeholder="Tìm kiếm danh mục theo tên"
+                  />
+                  <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>
+                      Mã danh mục
+                      <i class="fa-solid fa-arrow-down sort-icon"></i>
+                    </th>
+                    <th>
+                      Tên danh mục
+                      <i class="fa-solid fa-arrow-down sort-icon"></i>
+                    </th>
+                    <th>Trạng thái</th>
+                    <th>Chức năng</th>
+                  </tr>
+                </thead>
+                <tbody id="categoryTableBody">
+                  <tr data-status="active">
+                    <td>DM001</td>
+                    <td class="item-name">Quần áo</td>
+                    <td>
+                      <span class="status active"
+                        ><span class="dot"></span> Đang hoạt động</span
+                      >
+                    </td>
+                    <td class="action-cell">
+                      <i class="fa-regular fa-trash-can icon-delete"></i>
+                      <i
+                        class="fa-solid fa-pen icon-edit"
+                        onclick="openCategoryModal('edit')"
+                      ></i>
+                    </td>
+                  </tr>
+                  <tr data-status="inactive">
+                    <td>DM002</td>
+                    <td class="item-name">Kính mắt</td>
+                    <td>
+                      <span class="status inactive"
+                        ><span class="dot"></span> Ngừng hoạt động</span
+                      >
+                    </td>
+                    <td class="action-cell">
+                      <i class="fa-regular fa-trash-can icon-delete"></i>
+                      <i
+                        class="fa-solid fa-pen icon-edit"
+                        onclick="openCategoryModal('edit')"
+                      ></i>
+                    </td>
+                  </tr>
+                  <tr data-status="active">
+                    <td>DM003</td>
+                    <td class="item-name">Giày dép</td>
+                    <td>
+                      <span class="status active"
+                        ><span class="dot"></span> Đang hoạt động</span
+                      >
+                    </td>
+                    <td class="action-cell">
+                      <i class="fa-regular fa-trash-can icon-delete"></i>
+                      <i
+                        class="fa-solid fa-pen icon-edit"
+                        onclick="openCategoryModal('edit')"
+                      ></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="pagination" id="catPagination">
+              <button class="page-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+              </button>
+              <button class="page-btn page-number">1</button>
+              <button class="page-btn page-number">2</button>
+              <button class="page-btn page-number active">3</button>
+              <button class="page-btn page-number">4</button>
+              <button class="page-btn page-number">5</button>
+              <button class="page-btn page-number">6</button>
+              <button class="page-btn page-number">7</button>
+              <span class="page-dots">...</span>
+              <button class="page-btn page-number">20</button>
+              <button class="page-btn">
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </section>
+
+          <section id="product-view" class="view-section" style="display: none">
+            <div class="page-header">
+              <h1 class="page-title">Sản phẩm</h1>
+              <button class="btn btn-primary" onclick="openProductModal('add')">
+                Thêm mới sản phẩm
+              </button>
+            </div>
+
+            <div class="filter-bar">
+              <div class="filter-left">
+                <select class="form-select" style="margin-right: 15px">
+                  <option>Lọc theo danh mục</option>
+                </select>
+                <select id="prodStatusFilter" class="form-select">
+                  <option value="all">Tất cả trạng thái</option>
+                  <option value="active">Đang hoạt động</option>
+                  <option value="inactive">Ngừng hoạt động</option>
+                </select>
+              </div>
+              <div class="filter-right">
+                <div class="search-box">
+                  <input
+                    type="text"
+                    id="prodSearchInput"
+                    placeholder="Tìm kiếm sản phẩm theo tên"
+                  />
+                  <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>
+                      Mã sản phẩm
+                      <i class="fa-solid fa-arrow-down sort-icon"></i>
+                    </th>
+                    <th>
+                      Tên sản phẩm
+                      <i class="fa-solid fa-arrow-down sort-icon"></i>
+                    </th>
+                    <th>
+                      Giá <i class="fa-solid fa-arrow-down sort-icon"></i>
+                    </th>
+                    <th>Số lượng</th>
+                    <th>Giảm giá</th>
+                    <th>Trạng thái</th>
+                    <th>Chức năng</th>
+                  </tr>
+                </thead>
+                <tbody id="productTableBody">
+                  <tr data-status="active">
+                    <td>SP001</td>
+                    <td class="item-name">Iphone 12 Pro</td>
+                    <td>12.000.000 đ</td>
+                    <td>10</td>
+                    <td>0%</td>
+                    <td>
+                      <span class="status active"
+                        ><span class="dot"></span> Đang hoạt động</span
+                      >
+                    </td>
+                    <td class="action-cell">
+                      <i class="fa-regular fa-trash-can icon-delete"></i>
+                      <i
+                        class="fa-solid fa-pen icon-edit"
+                        onclick="openProductModal('edit', true)"
+                      ></i>
+                    </td>
+                  </tr>
+                  <tr data-status="inactive">
+                    <td>SP002</td>
+                    <td class="item-name">Samsung Galaxy S20</td>
+                    <td>21.000.000 đ</td>
+                    <td>100</td>
+                    <td>5%</td>
+                    <td>
+                      <span class="status inactive"
+                        ><span class="dot"></span> Ngừng hoạt động</span
+                      >
+                    </td>
+                    <td class="action-cell">
+                      <i class="fa-regular fa-trash-can icon-delete"></i>
+                      <i
+                        class="fa-solid fa-pen icon-edit"
+                        onclick="openProductModal('edit')"
+                      ></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="pagination" id="prodPagination">
+              <button class="page-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+              </button>
+              <button class="page-btn page-number active">1</button>
+              <button class="page-btn page-number">2</button>
+              <button class="page-btn page-number">3</button>
+              <span class="page-dots">...</span>
+              <button class="page-btn page-number">20</button>
+              <button class="page-btn">
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <script src="../js/category-manager.js"></script>
+  </body>
+</html>
