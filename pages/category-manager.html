@@ -158,22 +158,6 @@
                       ></i>
                     </td>
                   </tr>
-                  <tr data-status="active">
-                    <td>DM003</td>
-                    <td class="item-name">Giày dép</td>
-                    <td>
-                      <span class="status active"
-                        ><span class="dot"></span> Đang hoạt động</span
-                      >
-                    </td>
-                    <td class="action-cell">
-                      <i class="fa-regular fa-trash-can icon-delete"></i>
-                      <i
-                        class="fa-solid fa-pen icon-edit"
-                        onclick="openCategoryModal('edit')"
-                      ></i>
-                    </td>
-                  </tr>
                 </tbody>
               </table>
             </div>
@@ -182,13 +166,9 @@
               <button class="page-btn">
                 <i class="fa-solid fa-arrow-left"></i>
               </button>
-              <button class="page-btn page-number">1</button>
+              <button class="page-btn page-number active">1</button>
               <button class="page-btn page-number">2</button>
-              <button class="page-btn page-number active">3</button>
-              <button class="page-btn page-number">4</button>
-              <button class="page-btn page-number">5</button>
-              <button class="page-btn page-number">6</button>
-              <button class="page-btn page-number">7</button>
+              <button class="page-btn page-number">3</button>
               <span class="page-dots">...</span>
               <button class="page-btn page-number">20</button>
               <button class="page-btn">
@@ -265,25 +245,6 @@
                       <i class="fa-regular fa-trash-can icon-delete"></i>
                       <i
                         class="fa-solid fa-pen icon-edit"
-                        onclick="openProductModal('edit', true)"
-                      ></i>
-                    </td>
-                  </tr>
-                  <tr data-status="inactive">
-                    <td>SP002</td>
-                    <td class="item-name">Samsung Galaxy S20</td>
-                    <td>21.000.000 đ</td>
-                    <td>100</td>
-                    <td>5%</td>
-                    <td>
-                      <span class="status inactive"
-                        ><span class="dot"></span> Ngừng hoạt động</span
-                      >
-                    </td>
-                    <td class="action-cell">
-                      <i class="fa-regular fa-trash-can icon-delete"></i>
-                      <i
-                        class="fa-solid fa-pen icon-edit"
                         onclick="openProductModal('edit')"
                       ></i>
                     </td>
@@ -309,6 +270,145 @@
         </div>
       </main>
     </div>
+
+    <div class="modal-overlay" id="categoryModalOverlay">
+      <div class="modal-content modal-sm">
+        <div class="modal-header">
+          <h2 class="modal-title" id="categoryModalTitle">Thêm mới danh mục</h2>
+          <i
+            class="fa-solid fa-xmark close-icon"
+            onclick="closeModal('categoryModalOverlay')"
+          ></i>
+        </div>
+        <div class="modal-body">
+          <div class="form-group" id="catCodeGroup">
+            <label>Mã danh mục <span class="required">*</span></label>
+            <input
+              type="text"
+              class="form-control"
+              id="catCodeInput"
+              placeholder=""
+            />
+            <span class="error-message">Mã danh mục không được để trống</span>
+          </div>
+          <div class="form-group" id="catNameGroup">
+            <label>Tên danh mục <span class="required">*</span></label>
+            <input
+              type="text"
+              class="form-control"
+              id="catNameInput"
+              placeholder=""
+            />
+            <span class="error-message">Tên danh mục không được để trống</span>
+          </div>
+          <div class="form-group">
+            <label>Trạng thái</label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="catStatus" checked /> Đang hoạt động
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="catStatus" /> Ngừng hoạt động
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-outline"
+            onclick="closeModal('categoryModalOverlay')"
+          >
+            Hủy
+          </button>
+          <button class="btn btn-primary" id="categorySubmitBtn">Thêm</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="productModalOverlay">
+      <div class="modal-content modal-lg">
+        <div class="modal-header">
+          <h2 class="modal-title" id="productModalTitle">Thêm mới sản phẩm</h2>
+          <i
+            class="fa-solid fa-xmark close-icon"
+            onclick="closeModal('productModalOverlay')"
+          ></i>
+        </div>
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group half" id="prodCodeGroup">
+              <label>Mã sản phẩm <span class="required">*</span></label>
+              <input type="text" class="form-control" id="prodCodeInput" />
+              <span class="error-message">Mã sản phẩm không được để trống</span>
+            </div>
+            <div class="form-group half" id="prodNameGroup">
+              <label>Tên sản phẩm <span class="required">*</span></label>
+              <input type="text" class="form-control" id="prodNameInput" />
+              <span class="error-message"
+                >Tên sản phẩm không được để trống</span
+              >
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group half">
+              <label>Danh mục <span class="required">*</span></label>
+              <select class="form-control">
+                <option>Điện thoại</option>
+              </select>
+            </div>
+            <div class="form-group half">
+              <label>Trạng thái</label>
+              <div class="radio-group">
+                <label class="radio-label"
+                  ><input type="radio" name="prodStatus" checked /> Đang hoạt
+                  động</label
+                >
+                <label class="radio-label"
+                  ><input type="radio" name="prodStatus" /> Ngừng hoạt
+                  động</label
+                >
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group third">
+              <label>Số lượng</label>
+              <input type="number" class="form-control" value="1" />
+            </div>
+            <div class="form-group third">
+              <label>Giá</label>
+              <input type="text" class="form-control" value="10.000.000" />
+            </div>
+            <div class="form-group third">
+              <label>Giảm giá</label>
+              <input type="number" class="form-control" value="10" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Hình ảnh <span class="required">*</span></label>
+            <input
+              type="text"
+              class="form-control"
+              value="https://suckhoedoisong.qltns.mediacdn.vn/Images/..."
+            />
+          </div>
+          <div class="form-group">
+            <label>Chi tiết sản phẩm</label>
+            <textarea class="form-control" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-outline"
+            onclick="closeModal('productModalOverlay')"
+          >
+            Hủy
+          </button>
+          <button class="btn btn-primary" id="productSubmitBtn">Thêm</button>
+        </div>
+      </div>
+    </div>
+
     <script src="../js/category-manager.js"></script>
   </body>
 </html>
