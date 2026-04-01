@@ -125,40 +125,7 @@
                     <th>Chức năng</th>
                   </tr>
                 </thead>
-                <tbody id="categoryTableBody">
-                  <tr data-status="active">
-                    <td>DM001</td>
-                    <td class="item-name">Quần áo</td>
-                    <td>
-                      <span class="status active"
-                        ><span class="dot"></span> Đang hoạt động</span
-                      >
-                    </td>
-                    <td class="action-cell">
-                      <i class="fa-regular fa-trash-can icon-delete"></i>
-                      <i
-                        class="fa-solid fa-pen icon-edit"
-                        onclick="openCategoryModal('edit')"
-                      ></i>
-                    </td>
-                  </tr>
-                  <tr data-status="inactive">
-                    <td>DM002</td>
-                    <td class="item-name">Kính mắt</td>
-                    <td>
-                      <span class="status inactive"
-                        ><span class="dot"></span> Ngừng hoạt động</span
-                      >
-                    </td>
-                    <td class="action-cell">
-                      <i class="fa-regular fa-trash-can icon-delete"></i>
-                      <i
-                        class="fa-solid fa-pen icon-edit"
-                        onclick="openCategoryModal('edit')"
-                      ></i>
-                    </td>
-                  </tr>
-                </tbody>
+                <tbody id="categoryTableBody"></tbody>
               </table>
             </div>
 
@@ -242,7 +209,12 @@
                       >
                     </td>
                     <td class="action-cell">
-                      <i class="fa-regular fa-trash-can icon-delete"></i>
+                      <i
+                        class="fa-regular fa-trash-can icon-delete"
+                        onclick="
+                          openDeleteModal(this, 'sản phẩm', 'Iphone 12 Pro')
+                        "
+                      ></i>
                       <i
                         class="fa-solid fa-pen icon-edit"
                         onclick="openProductModal('edit')"
@@ -305,10 +277,12 @@
             <label>Trạng thái</label>
             <div class="radio-group">
               <label class="radio-label">
-                <input type="radio" name="catStatus" checked /> Đang hoạt động
+                <input type="radio" name="catStatus" value="active" checked />
+                Đang hoạt động
               </label>
               <label class="radio-label">
-                <input type="radio" name="catStatus" /> Ngừng hoạt động
+                <input type="radio" name="catStatus" value="inactive" /> Ngừng
+                hoạt động
               </label>
             </div>
           </div>
@@ -408,7 +382,32 @@
         </div>
       </div>
     </div>
+    <!-- Modal Xóa -->
+    <div class="modal-overlay" id="deleteModalOverlay">
+      <div class="modal-content modal-delete">
+        <div class="delete-body">
+          <div class="warning-icon-wrapper">
+            <i class="fa-solid fa-exclamation warning-icon"></i>
+          </div>
+          <h3 class="delete-title">Xác nhận</h3>
+          <p class="delete-text">
+            Bạn có chắc chắn muốn xóa <span id="deleteItemType"></span>
+            <strong id="deleteItemName"></strong> khỏi hệ thống không?
+          </p>
+        </div>
+        <div class="delete-footer">
+          <button
+            class="btn btn-outline"
+            onclick="closeModal('deleteModalOverlay')"
+          >
+            Hủy
+          </button>
+          <button class="btn btn-danger" id="confirmDeleteBtn">Xóa</button>
+        </div>
+      </div>
+    </div>
 
+    <div id="toastContainer" class="toast-container"></div>
     <script src="../js/category-manager.js"></script>
   </body>
 </html>
